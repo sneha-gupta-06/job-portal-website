@@ -1,6 +1,7 @@
 package com.risen.service;
 
 import java.time.LocalDate;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,5 +21,10 @@ public class UsersService {
 		users.setRegistrationDate(LocalDate.now());
 		
 		return usersRepository.save(users);
+	}
+	
+	
+	public Optional<Users> getUserByEmail(String email){
+		return usersRepository.findByEmail(email);
 	}
 }

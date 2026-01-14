@@ -11,11 +11,15 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
 @Table(name = "users_type")
-@Data
+@Getter
+@Setter
+
 @NoArgsConstructor
 @AllArgsConstructor
 public class UsersType {
@@ -28,5 +32,10 @@ public class UsersType {
 	
 	@OneToMany(targetEntity = Users.class, mappedBy = "userTypeId", cascade = CascadeType.ALL)
 	private List<Users> users;
+
+	@Override
+	public String toString() {
+		return "UsersType [userTypeId=" + userTypeId + ", userTypeName=" + userTypeName + "]";
+	}
 	
 }

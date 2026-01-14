@@ -1,6 +1,7 @@
 package com.risen.controller;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -36,8 +37,23 @@ public class UsersController {
 	}
 	
 	@PostMapping("/register/new")
-	public String userRegistration(@Valid Users users) {
+	public String userRegistration(@Valid Users users, Model model) {
 		System.out.println("users: " + users);
+		
+		Optional<Users> userByEmail = usersService.getUserByEmail(users.getEmail());
+		
+		
+		if (userByEmail.isPresent()) {
+			
+			model.addAttribute("error", "Email already existed, Ty with different email");
+			List<UsersType> usersType = usersTypeService.getAll();
+			
+			model.addAttribute("getAllTypes", usersType);
+			model.addAttribute("user", new Users());
+			
+			return "register";
+		}
+		
 		usersService.addNew(users);
 		return "dashboard";
 	}
